@@ -1,0 +1,9 @@
+.env
+/data/*.sqlite
+/data/*.sqlite-*
+/vendor/
+/.phpunit.cache/
+/.idea/
+/.vscode/
+*.log
+
