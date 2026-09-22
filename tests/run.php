@@ -51,4 +51,12 @@ $assert(count($cashRepository->reviewsForMonth('2026-09')) === 2, 'La revisión 
 $assert($cash['spending'] === 160.0 && $cash['remaining'] === 340.0, 'La estimación de gasto no es correcta.');
 $assert($cash['income_total'] === 1900.0 && $cash['income_difference'] === 200.0, 'El total mensual de ingresos no es correcto.');
 
+$_SESSION = [];
+$auth = new App\Auth($pdo, 'persona@example.com', password_hash('clave-de-prueba', PASSWORD_BCRYPT));
+$assert($auth->configured() && !$auth->check(), 'La autenticación de prueba no se inicializa correctamente.');
+for ($attempt = 0; $attempt < 5; $attempt++) {
+    $assert(!$auth->attempt('persona@example.com', 'incorrecta', '192.0.2.1'), 'Una contraseña incorrecta fue aceptada.');
+}
+$assert($auth->tooManyAttempts('192.0.2.1'), 'El límite de cinco intentos no se activa.');
+
 fwrite(STDOUT, "OK ({$assertions} comprobaciones)\n");

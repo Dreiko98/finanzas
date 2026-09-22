@@ -20,7 +20,9 @@ $chartHistory = array_map(static fn (array $row): array => [
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#191923">
     <title>Resumen · Finanzas</title>
+    <link rel="icon" href="/assets/brand.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,8 +30,8 @@ $chartHistory = array_map(static fn (array $row): array => [
 </head>
 <body>
     <header class="site-header">
-        <a href="/" class="brand">Germán Mallo <span>Finanzas</span></a>
-        <nav><a href="/movimientos">Ingresos y gastos</a><a href="#actualizar">Actualizar</a></nav>
+        <a href="/" class="brand"><img src="/assets/brand.svg" alt=""><span class="brand-name">Germán Mallo</span><span>Finanzas</span></a>
+        <nav aria-label="Principal"><a href="/" aria-current="page">El plan</a><a href="/movimientos">Ingresos y gastos</a><a href="#actualizar">Actualizar</a></nav>
         <form method="post" action="/logout">
             <input type="hidden" name="_token" value="<?= e(\App\Csrf::token()) ?>">
             <button class="button-link" type="submit">Salir</button>

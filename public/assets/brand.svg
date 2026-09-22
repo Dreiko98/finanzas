@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title">
+  <title id="title">Germán Mallo</title>
+  <rect width="192" height="192" rx="12" fill="#172238"/>
+  <circle cx="96" cy="84" r="44" fill="none" stroke="#fff" stroke-width="3"/>
+  <text x="96" y="99" fill="#fff" font-family="Georgia,serif" font-size="46" text-anchor="middle">GM</text>
+  <path d="M31 111c-9-17 15-22 17-7 2 17-27 22-17 0M161 111c9-17-15-22-17-7-2 17 27 22 17 0M47 121c18 0 23 21 42 6M145 121c-18 0-23 21-42 6M76 135c8 10 15-8 20-8s12 18 20 8" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3"/>
+</svg>

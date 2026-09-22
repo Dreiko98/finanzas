@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#191923">
     <title>Acceso · Finanzas</title>
+    <link rel="icon" href="/assets/brand.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,6 +14,7 @@
 </head>
 <body class="login-page">
     <main class="login-card">
+        <img class="login-logo" src="/assets/brand.svg" alt="">
         <p class="eyebrow">Germán Mallo</p>
         <h1>Mis finanzas</h1>
         <p class="muted">Una revisión a la semana. Nada más.</p>

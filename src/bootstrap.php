@@ -19,6 +19,10 @@ spl_autoload_register(static function (string $class) use ($root): void {
 });
 
 $production = $config['app']['env'] === 'production';
+if ($production) {
+    ini_set('display_errors', '0');
+    ini_set('log_errors', '1');
+}
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 session_name('finanzas_session');
@@ -46,4 +50,3 @@ function redirect(string $path): never
 }
 
 return compact('config', 'pdo', 'auth');
-
