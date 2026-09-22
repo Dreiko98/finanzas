@@ -73,5 +73,27 @@ final class Database
             created_at {$dateTime} NOT NULL
             {$uniqueDate}
         )");
+
+        $uniqueReviewDate = $driver === 'mysql' ? ', UNIQUE KEY uq_review_date (reviewed_on)' : ', UNIQUE (reviewed_on)';
+        $pdo->exec("CREATE TABLE IF NOT EXISTS current_account_reviews (
+            id {$id},
+            reviewed_on DATE NOT NULL,
+            remaining_balance DECIMAL(12,2) NOT NULL,
+            created_at {$dateTime} NOT NULL
+            {$uniqueReviewDate}
+        )");
+
+        $incomeIndex = $driver === 'mysql' ? ', INDEX idx_income_date (income_date)' : '';
+        $pdo->exec("CREATE TABLE IF NOT EXISTS incomes (
+            id {$id},
+            income_date DATE NOT NULL,
+            concept VARCHAR(120) NOT NULL,
+            amount DECIMAL(12,2) NOT NULL,
+            created_at {$dateTime} NOT NULL
+            {$incomeIndex}
+        )");
+        if ($driver === 'sqlite') {
+            $pdo->exec('CREATE INDEX IF NOT EXISTS idx_income_date ON incomes (income_date)');
+        }
     }
 }

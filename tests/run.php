@@ -36,4 +36,19 @@ $repository->save($snapshot);
 $repository->save(array_replace($snapshot, ['trade_republic' => 1100]));
 $assert(count($repository->all()) === 1 && (float) $repository->latest()['trade_republic'] === 1100.0, 'La revisión de una fecha no se actualiza correctamente.');
 
+$cashRepository = new App\CashflowRepository($pdo, 'sqlite');
+$cashRepository->saveReview('2026-09-07', 430);
+$cashRepository->saveReview('2026-09-14', 350);
+$cashRepository->saveReview('2026-09-14', 340);
+$cashRepository->addIncome('2026-09-01', 'Sueldo', 1700);
+$cashRepository->addIncome('2026-09-12', 'Encargo', 200);
+$cash = (new App\CashflowService())->summary(
+    $cashRepository->reviewsForMonth('2026-09'),
+    $cashRepository->incomesForMonth('2026-09'),
+    $plan2026,
+);
+$assert(count($cashRepository->reviewsForMonth('2026-09')) === 2, 'La revisión semanal no se actualiza por fecha.');
+$assert($cash['spending'] === 160.0 && $cash['remaining'] === 340.0, 'La estimación de gasto no es correcta.');
+$assert($cash['income_total'] === 1900.0 && $cash['income_difference'] === 200.0, 'El total mensual de ingresos no es correcto.');
+
 fwrite(STDOUT, "OK ({$assertions} comprobaciones)\n");

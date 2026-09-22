@@ -29,7 +29,7 @@ $chartHistory = array_map(static fn (array $row): array => [
 <body>
     <header class="site-header">
         <a href="/" class="brand">Germán Mallo <span>Finanzas</span></a>
-        <nav><a href="#actualizar">Actualizar</a></nav>
+        <nav><a href="/movimientos">Ingresos y gastos</a><a href="#actualizar">Actualizar</a></nav>
         <form method="post" action="/logout">
             <input type="hidden" name="_token" value="<?= e(\App\Csrf::token()) ?>">
             <button class="button-link" type="submit">Salir</button>

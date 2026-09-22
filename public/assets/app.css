@@ -31,7 +31,7 @@ button { min-height: 48px; border: 0; border-radius: 4px; background: var(--acce
 .site-header { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 5vw; background: #20202a; }
 .brand { font-weight: 700; text-decoration: none; }
 .brand span { color: var(--muted); font-weight: 400; }
-.site-header nav { margin-left: auto; }
+.site-header nav { display: flex; gap: 1.2rem; margin-left: auto; }
 .site-header nav a { color: var(--muted); font-size: 0.85rem; text-decoration: none; }
 .button-link { min-height: auto; padding: 0; background: none; color: var(--muted); }
 .container { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; padding: 3rem 0; }
@@ -73,6 +73,26 @@ legend { padding: 0 0.4rem; color: var(--muted); font-size: 0.8rem; }
 .check { display: flex; align-items: center; gap: 0.6rem; font-weight: 400; }
 .check input { width: 20px; min-height: 20px; accent-color: var(--accent); }
 .weekly-form > button { justify-self: start; min-width: 180px; }
+.month-picker label { min-width: 180px; }
+.month-picker input { min-height: 42px; }
+.cash-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.cash-summary .card { display: grid; gap: 0.35rem; margin-top: 0; }
+.cash-summary span { color: var(--muted); font-size: 0.8rem; }
+.cash-summary strong { font-size: clamp(1.35rem, 3vw, 2rem); }
+.cash-summary small { color: var(--muted); }
+.quick-forms { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 1rem; }
+.quick-forms .form-card { margin-top: 2.5rem; }
+.quick-forms h2 { margin-top: 0; }
+.compact-form { display: grid; gap: 1rem; margin-top: 1.25rem; }
+.compact-form button { justify-self: start; }
+.income-list { margin-top: 1rem; }
+.income-list h2 { margin: 0; }
+.empty { margin-bottom: 0; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; margin-top: 1rem; border-collapse: collapse; }
+th, td { padding: 0.8rem 0.5rem; border-bottom: 1px solid #41414e; text-align: left; }
+th { color: var(--muted); font-size: 0.75rem; font-weight: 500; }
+th:last-child, td:last-child { text-align: right; }
 
 @media (max-width: 540px) {
     .site-header { padding: 0 1rem; }
@@ -83,6 +103,10 @@ legend { padding: 0 0.4rem; color: var(--muted); font-size: 0.8rem; }
     .balance-grid { grid-template-columns: repeat(2, 1fr); }
     .balance:first-child { grid-column: 1 / -1; }
     .input-grid { grid-template-columns: 1fr; }
+    .cash-summary, .quick-forms { grid-template-columns: 1fr; }
+    .quick-forms .form-card:first-child { margin-top: 1.5rem; }
+    .quick-forms .form-card:last-child { margin-top: 0; }
+    .month-picker, .month-picker label { width: 100%; }
     .weekly-form > label { max-width: none; }
     .weekly-form > button { width: 100%; }
 }
@@ -90,4 +114,5 @@ legend { padding: 0 0.4rem; color: var(--muted); font-size: 0.8rem; }
 @media (min-width: 541px) and (max-width: 850px) {
     .balance-grid { grid-template-columns: repeat(3, 1fr); }
     .input-grid { grid-template-columns: repeat(2, 1fr); }
+    .cash-summary { grid-template-columns: 1fr 1fr; }
 }
