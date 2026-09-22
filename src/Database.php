@@ -58,5 +58,20 @@ final class Database
         if ($driver === 'sqlite') {
             $pdo->exec('CREATE INDEX IF NOT EXISTS idx_login_attempts_ip_time ON login_attempts (ip_hash, attempted_at)');
         }
+
+        $uniqueDate = $driver === 'mysql' ? ', UNIQUE KEY uq_snapshot_date (recorded_on)' : ', UNIQUE (recorded_on)';
+        $pdo->exec("CREATE TABLE IF NOT EXISTS financial_snapshots (
+            id {$id},
+            recorded_on DATE NOT NULL,
+            trade_republic DECIMAL(12,2) NOT NULL,
+            long_term DECIMAL(12,2) NOT NULL,
+            home_portfolio DECIMAL(12,2) NOT NULL,
+            bitcoin DECIMAL(12,2) NOT NULL,
+            bbva DECIMAL(12,2) NOT NULL,
+            funds_done SMALLINT NOT NULL DEFAULT 0,
+            bitcoin_done SMALLINT NOT NULL DEFAULT 0,
+            created_at {$dateTime} NOT NULL
+            {$uniqueDate}
+        )");
     }
 }
