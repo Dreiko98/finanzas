@@ -49,7 +49,7 @@ Aplicación personal para comprobar el plan financiero de un vistazo y anotar lo
    DB_PASSWORD=contraseña
    ```
 
-4. Configura el document root del subdominio para que apunte a `public/`. `config/`, `src/`, `data/` y `.env` deben quedar fuera del webroot.
+4. Siempre que sea posible, configura el document root del subdominio para que apunte a `public/`. Si el hosting obliga a usar directamente su raíz —como ocurre en este despliegue de IONOS— utiliza el modo `flat`; la aplicación bloquea el acceso web a `config/`, `src/`, `data/` y `.env`.
 
 Para levantar el proyecto localmente:
 
@@ -78,6 +78,10 @@ export SFTP_TARGET='/ruta/remota/finanzas'
 ./deploy.sh
 ```
 
-El destino es la carpeta padre de `public/`. El script actualiza código y recursos, pero excluye deliberadamente `.env` y cualquier SQLite para no sobrescribir secretos ni datos. En el primer despliegue hay que crear `.env` en el servidor y confirmar que `data/` sea escribible por PHP. Antes de cambios de infraestructura, descarga una copia de `data/finanzas.sqlite` como respaldo.
+Por defecto se usa `SFTP_LAYOUT=flat`: el contenido público se coloca directamente en el document root y `src/`, `config/` y `data/` quedan protegidos mediante `.htaccess`. Es la disposición utilizada en IONOS para este proyecto. Si el panel permite apuntar el document root a una subcarpeta `public/`, se puede definir `SFTP_LAYOUT=parent`.
+
+Cuando la cuenta SFTP ya está limitada a la raíz exacta del subdominio, usa `SFTP_TARGET=/` junto con `SFTP_ALLOW_ROOT=yes`. El script no elimina archivos remotos, no sube `.env` y nunca sustituye una base SQLite.
+
+En el primer despliegue hay que crear `.env` en el servidor y confirmar que `data/` sea escribible por PHP. Antes de cambios de infraestructura, descarga una copia de la base de datos como respaldo.
 
 No se incluyen credenciales SFTP reales; el script queda listo para activarse cuando estén disponibles.

@@ -9,8 +9,10 @@ use App\PlanService;
 use App\SnapshotRepository;
 use App\WeeklyGuide;
 
+$applicationRoot = is_dir(dirname(__DIR__) . '/src') ? dirname(__DIR__) : __DIR__;
+
 try {
-    ['config' => $config, 'pdo' => $pdo, 'auth' => $auth] = require dirname(__DIR__) . '/src/bootstrap.php';
+    ['config' => $config, 'pdo' => $pdo, 'auth' => $auth] = require $applicationRoot . '/src/bootstrap.php';
 } catch (Throwable $exception) {
     http_response_code(503);
     error_log($exception->__toString());
@@ -41,7 +43,7 @@ if ($path === '/login') {
         }
     }
 
-    require dirname(__DIR__) . '/src/views/login.php';
+    require $applicationRoot . '/src/views/login.php';
     exit;
 }
 
@@ -145,7 +147,7 @@ if ($path === '/movimientos' && $method === 'GET') {
     $flashSuccess = $_SESSION['flash_success'] ?? null;
     $flashError = $_SESSION['flash_error'] ?? null;
     unset($_SESSION['flash_success'], $_SESSION['flash_error']);
-    require dirname(__DIR__) . '/src/views/cashflow.php';
+    require $applicationRoot . '/src/views/cashflow.php';
     exit;
 }
 
@@ -160,7 +162,7 @@ if ($path === '/ayuda' && $method === 'GET') {
         $monthIncomes,
         static fn (array $income): bool => $income['income_date'] >= $weeklyStatus['week_start']->format('Y-m-d'),
     ));
-    require dirname(__DIR__) . '/src/views/help.php';
+    require $applicationRoot . '/src/views/help.php';
     exit;
 }
 
@@ -179,4 +181,4 @@ $flashSuccess = $_SESSION['flash_success'] ?? null;
 $flashError = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 
-require dirname(__DIR__) . '/src/views/dashboard.php';
+require $applicationRoot . '/src/views/dashboard.php';
