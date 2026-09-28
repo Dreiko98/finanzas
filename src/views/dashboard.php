@@ -31,7 +31,8 @@ $chartHistory = array_map(static fn (array $row): array => [
 <body>
     <header class="site-header">
         <a href="/" class="brand"><img src="/assets/brand.svg" alt=""><span class="brand-name">Germán Mallo</span><span>Finanzas</span></a>
-        <nav aria-label="Principal"><a href="/" aria-current="page">El plan</a><a href="/movimientos">Ingresos y gastos</a><a href="#actualizar">Actualizar</a></nav>
+        <nav aria-label="Principal"><a href="/" aria-current="page">El plan</a><a href="/movimientos">Ingresos y gastos</a><a href="/ayuda">Ayuda</a><a href="#actualizar">Actualizar</a></nav>
+        <a class="header-help" href="/ayuda">Ayuda</a>
         <form method="post" action="/logout">
             <input type="hidden" name="_token" value="<?= e(\App\Csrf::token()) ?>">
             <button class="button-link" type="submit">Salir</button>
@@ -45,6 +46,14 @@ $chartHistory = array_map(static fn (array $row): array => [
         <section class="page-heading">
             <div><p class="eyebrow">Tu plan, hoy</p><h1><?= $latest ? 'Así vas' : 'Primera revisión' ?></h1></div>
             <?php if ($latest): ?><p class="muted">Actualizado el <?= e(date('d/m/Y', strtotime($latest['recorded_on']))) ?></p><?php endif; ?>
+        </section>
+
+        <section class="weekly-guide-banner <?= $weeklyStatus['all_done'] ? 'is-complete' : '' ?>">
+            <div>
+                <strong><?= $weeklyStatus['all_done'] ? 'Revisión semanal completada' : 'Tu revisión semanal' ?></strong>
+                <span><?= $weeklyStatus['all_done'] ? 'Ya has hecho los dos pasos importantes de esta semana.' : $weeklyStatus['pending'] . ($weeklyStatus['pending'] === 1 ? ' paso pendiente.' : ' pasos pendientes.') ?></span>
+            </div>
+            <a class="button-secondary" href="/ayuda"><?= $weeklyStatus['all_done'] ? 'Ver ayuda' : 'Guíame paso a paso' ?></a>
         </section>
 
         <?php if ($planSummary['emergency_reached']): ?>

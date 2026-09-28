@@ -59,4 +59,18 @@ for ($attempt = 0; $attempt < 5; $attempt++) {
 }
 $assert($auth->tooManyAttempts('192.0.2.1'), 'El límite de cinco intentos no se activa.');
 
+$guide = new App\WeeklyGuide();
+$weekly = $guide->status(
+    ['recorded_on' => '2026-09-22'],
+    ['reviewed_on' => '2026-09-21'],
+    new DateTimeImmutable('2026-09-27'),
+);
+$assert($weekly['all_done'] && $weekly['completed'] === 2, 'La guía no reconoce las tareas hechas durante la semana.');
+$nextWeek = $guide->status(
+    ['recorded_on' => '2026-09-27'],
+    ['reviewed_on' => '2026-09-27'],
+    new DateTimeImmutable('2026-09-28'),
+);
+$assert(!$nextWeek['all_done'] && $nextWeek['pending'] === 2, 'La guía no reinicia las tareas al comenzar una semana.');
+
 fwrite(STDOUT, "OK ({$assertions} comprobaciones)\n");

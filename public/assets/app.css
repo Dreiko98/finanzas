@@ -40,7 +40,9 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .site-header nav { display: flex; gap: 1.2rem; margin-left: auto; }
 .site-header nav a { color: var(--muted); font-size: 0.85rem; text-decoration: none; }
 .site-header nav a:hover, .site-header nav a[aria-current="page"] { color: var(--text); }
+.header-help { display: none; color: var(--muted); font-size: 0.85rem; text-decoration: none; }
 .button-link { min-height: auto; padding: 0; background: none; color: var(--muted); }
+.button-secondary, .guide-primary-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 4px; background: var(--accent); color: #fff; padding: 0.65rem 1rem; font-size: 0.82rem; font-weight: 600; text-decoration: none; }
 .container { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; padding: 3rem 0; }
 .card { padding: 1.5rem; margin-top: 1.5rem; }
 .page-heading, .section-heading, .card-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
@@ -60,6 +62,10 @@ h2 { margin: 2.5rem 0 1rem; font-size: 1.25rem; }
 .status-green { color: #34d399; } .status-amber { color: #fbbf24; } .status-red { color: #fb7185; }
 .milestone { display: grid; gap: 0.2rem; margin-bottom: 1rem; padding: 1rem 1.2rem; border-left: 3px solid #34d399; background: #202a29; }
 .milestone span { color: #b7c9c4; }
+.weekly-guide-banner { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; margin-bottom: 1rem; padding: 1rem 1.2rem; border-left: 3px solid var(--accent); background: #202634; }
+.weekly-guide-banner > div { display: grid; gap: 0.15rem; }
+.weekly-guide-banner span { color: var(--muted); }
+.weekly-guide-banner.is-complete { border-color: #34d399; background: #202a29; }
 .balance-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
 .balance { display: grid; gap: 0.4rem; min-width: 0; padding: 1rem; border: 1px solid #383845; background: #20202a; }
 .balance span { overflow: hidden; color: var(--muted); font-size: 0.72rem; text-overflow: ellipsis; white-space: nowrap; }
@@ -100,10 +106,37 @@ table { width: 100%; margin-top: 1rem; border-collapse: collapse; }
 th, td { padding: 0.8rem 0.5rem; border-bottom: 1px solid #41414e; text-align: left; }
 th { color: var(--muted); font-size: 0.75rem; font-weight: 500; }
 th:last-child, td:last-child { text-align: right; }
+.help-page { max-width: 900px; }
+.help-hero { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #343440; }
+.help-hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.help-hero .muted { max-width: 620px; margin-bottom: 0; }
+.guide-progress { display: grid; flex: 0 0 auto; width: 112px; height: 112px; place-content: center; text-align: center; border: 7px solid #343440; border-top-color: var(--accent); border-radius: 50%; }
+.guide-progress strong { font-size: 1.6rem; line-height: 1; }
+.guide-progress span { margin-top: 0.25rem; color: var(--muted); font-size: 0.68rem; }
+.guide-primary-action { gap: 2rem; margin-top: 1.5rem; }
+.guide-steps { display: grid; gap: 1rem; margin: 2rem 0; padding: 0; list-style: none; }
+.guide-card { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: clamp(1.25rem, 3vw, 2rem); background: linear-gradient(159deg, var(--surface), var(--surface-2)); box-shadow: 0 3px 8px rgba(15,15,20,.2); }
+.guide-card.is-done { border-left: 3px solid #34d399; }
+.guide-card.is-optional { border-left: 3px solid #6b7280; }
+.guide-number { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: var(--accent); color: white; font-weight: 700; }
+.guide-card.is-done .guide-number { background: #16835f; }
+.guide-card.is-optional .guide-number { background: #4b5563; }
+.guide-content > p { color: #c2c2c8; }
+.guide-content ul { margin: 1rem 0 1.25rem; padding-left: 1.2rem; color: var(--muted); }
+.guide-content li + li { margin-top: 0.35rem; }
+.guide-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.guide-heading h2 { margin: 0; }
+.guide-state { flex: 0 0 auto; color: var(--muted); font-size: 0.75rem; font-weight: 600; }
+.is-done .guide-state { color: #34d399; }
+.guide-note { padding: 0.75rem 1rem; border-left: 2px solid var(--accent); background: #20202a; font-size: 0.85rem; }
+.guide-finish { padding: 1.5rem; background: #20202a; }
+.guide-finish h2 { margin: 0; }
+.guide-finish p:not(.eyebrow) { color: var(--muted); }
 
 @media (max-width: 540px) {
     .site-header { padding: 0 1rem; }
     .site-header nav { display: none; }
+    .header-help { display: inline; margin-left: auto; }
     .brand .brand-name { display: none; }
     .container { padding-top: 2rem; }
     .page-heading, .section-heading { align-items: flex-start; flex-direction: column; }
@@ -115,6 +148,12 @@ th:last-child, td:last-child { text-align: right; }
     .quick-forms .form-card:first-child { margin-top: 1.5rem; }
     .quick-forms .form-card:last-child { margin-top: 0; }
     .month-picker, .month-picker label { width: 100%; }
+    .weekly-guide-banner, .help-hero { align-items: flex-start; flex-direction: column; }
+    .weekly-guide-banner .button-secondary, .guide-primary-action { width: 100%; }
+    .guide-progress { width: 92px; height: 92px; }
+    .guide-card { grid-template-columns: 36px 1fr; gap: 0.75rem; }
+    .guide-number { width: 32px; height: 32px; }
+    .guide-heading { flex-direction: column; gap: 0.25rem; }
     .weekly-form > label { max-width: none; }
     .weekly-form > button { width: 100%; }
 }

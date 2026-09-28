@@ -7,6 +7,7 @@ use App\CashflowRepository;
 use App\CashflowService;
 use App\PlanService;
 use App\SnapshotRepository;
+use App\WeeklyGuide;
 
 try {
     ['config' => $config, 'pdo' => $pdo, 'auth' => $auth] = require dirname(__DIR__) . '/src/bootstrap.php';
@@ -148,6 +149,21 @@ if ($path === '/movimientos' && $method === 'GET') {
     exit;
 }
 
+if ($path === '/ayuda' && $method === 'GET') {
+    $today = new DateTimeImmutable('today');
+    $latest = $snapshots->latest();
+    $latestReview = $cashflow->latestReview();
+    $weeklyStatus = (new WeeklyGuide())->status($latest, $latestReview, $today);
+    $monthlyPlan = (new PlanService())->monthlyPlan($today);
+    $monthIncomes = $cashflow->incomesForMonth($today->format('Y-m'));
+    $weekIncomeCount = count(array_filter(
+        $monthIncomes,
+        static fn (array $income): bool => $income['income_date'] >= $weeklyStatus['week_start']->format('Y-m-d'),
+    ));
+    require dirname(__DIR__) . '/src/views/help.php';
+    exit;
+}
+
 if ($path !== '/') {
     http_response_code(404);
     exit('Página no encontrada.');
@@ -155,6 +171,8 @@ if ($path !== '/') {
 
 $latest = $snapshots->latest();
 $history = $snapshots->all();
+$latestReview = $cashflow->latestReview();
+$weeklyStatus = (new WeeklyGuide())->status($latest, $latestReview, new DateTimeImmutable('today'));
 $planService = new PlanService();
 $planSummary = $planService->summary($latest, new DateTimeImmutable('today'));
 $flashSuccess = $_SESSION['flash_success'] ?? null;

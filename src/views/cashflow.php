@@ -20,7 +20,8 @@ $selectedIsCurrent = $month === date('Y-m');
 <body>
     <header class="site-header">
         <a href="/" class="brand"><img src="/assets/brand.svg" alt=""><span class="brand-name">Germán Mallo</span><span>Finanzas</span></a>
-        <nav aria-label="Principal"><a href="/">El plan</a><a href="/movimientos" aria-current="page">Ingresos y gastos</a><a href="#saldo">Actualizar saldo</a></nav>
+        <nav aria-label="Principal"><a href="/">El plan</a><a href="/movimientos" aria-current="page">Ingresos y gastos</a><a href="/ayuda">Ayuda</a><a href="#saldo">Actualizar saldo</a></nav>
+        <a class="header-help" href="/ayuda">Ayuda</a>
         <form method="post" action="/logout"><input type="hidden" name="_token" value="<?= e(\App\Csrf::token()) ?>"><button class="button-link" type="submit">Salir</button></form>
     </header>
 
