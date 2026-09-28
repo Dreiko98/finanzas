@@ -36,6 +36,30 @@ final class PlanService
         ];
     }
 
+    public function balanceOverview(?array $latest): array
+    {
+        if ($latest === null) {
+            return [
+                'total' => null,
+                'trade_republic' => null,
+                'long_term' => null,
+                'home_portfolio' => null,
+                'bitcoin' => null,
+                'bbva' => null,
+            ];
+        }
+
+        $balances = [
+            'trade_republic' => (float) $latest['trade_republic'],
+            'long_term' => (float) $latest['long_term'],
+            'home_portfolio' => (float) $latest['home_portfolio'],
+            'bitcoin' => (float) $latest['bitcoin'],
+            'bbva' => (float) $latest['bbva'],
+        ];
+
+        return ['total' => array_sum($balances)] + $balances;
+    }
+
     private function status(bool $done, DateTimeImmutable $today): array
     {
         if ($done) {

@@ -66,10 +66,17 @@ h2 { margin: 2.5rem 0 1rem; font-size: 1.25rem; }
 .weekly-guide-banner > div { display: grid; gap: 0.15rem; }
 .weekly-guide-banner span { color: var(--muted); }
 .weekly-guide-banner.is-complete { border-color: #34d399; background: #202a29; }
-.balance-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
-.balance { display: grid; gap: 0.4rem; min-width: 0; padding: 1rem; border: 1px solid #383845; background: #20202a; }
-.balance span { overflow: hidden; color: var(--muted); font-size: 0.72rem; text-overflow: ellipsis; white-space: nowrap; }
-.balance strong { font-size: clamp(1rem, 2vw, 1.25rem); }
+.overview-section { margin: 2rem 0; }
+.overview-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.overview-heading h2 { margin: 0; }
+.overview-heading > p { margin: 0; color: var(--muted); font-size: 0.82rem; }
+.overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.overview-kpi { display: grid; gap: 0.35rem; min-width: 0; padding: 1.15rem; border: 1px solid #383845; background: #20202a; }
+.overview-kpi span { overflow: hidden; color: var(--muted); font-size: 0.75rem; text-overflow: ellipsis; white-space: nowrap; }
+.overview-kpi strong { font-size: clamp(1.15rem, 2vw, 1.55rem); }
+.overview-kpi small { color: #707079; font-size: 0.68rem; }
+.overview-total { border-color: #285c8a; background: linear-gradient(145deg, #243246, #202634); }
+.overview-total strong { color: #7cc4ff; font-size: clamp(1.35rem, 3vw, 2rem); }
 .chart-card { margin-top: 2.5rem; }
 .chart-card h2 { margin-top: 0; }
 .chart-wrap { width: 100%; margin-top: 1rem; overflow: hidden; }
@@ -141,8 +148,9 @@ th:last-child, td:last-child { text-align: right; }
     .container { padding-top: 2rem; }
     .page-heading, .section-heading { align-items: flex-start; flex-direction: column; }
     .summary-grid { grid-template-columns: 1fr; }
-    .balance-grid { grid-template-columns: repeat(2, 1fr); }
-    .balance:first-child { grid-column: 1 / -1; }
+    .overview-heading { align-items: flex-start; flex-direction: column; }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .overview-total { grid-column: 1 / -1; }
     .input-grid { grid-template-columns: 1fr; }
     .cash-summary, .quick-forms { grid-template-columns: 1fr; }
     .quick-forms .form-card:first-child { margin-top: 1.5rem; }
@@ -163,7 +171,7 @@ th:last-child, td:last-child { text-align: right; }
 }
 
 @media (min-width: 541px) and (max-width: 850px) {
-    .balance-grid { grid-template-columns: repeat(3, 1fr); }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
     .input-grid { grid-template-columns: repeat(2, 1fr); }
     .cash-summary { grid-template-columns: 1fr 1fr; }
 }

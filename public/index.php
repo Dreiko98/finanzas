@@ -177,6 +177,7 @@ $latestReview = $cashflow->latestReview();
 $weeklyStatus = (new WeeklyGuide())->status($latest, $latestReview, new DateTimeImmutable('today'));
 $planService = new PlanService();
 $planSummary = $planService->summary($latest, new DateTimeImmutable('today'));
+$balanceOverview = $planService->balanceOverview($latest);
 $flashSuccess = $_SESSION['flash_success'] ?? null;
 $flashError = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_success'], $_SESSION['flash_error']);

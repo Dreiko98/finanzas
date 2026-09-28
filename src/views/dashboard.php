@@ -56,6 +56,25 @@ $chartHistory = array_map(static fn (array $row): array => [
             <a class="button-secondary" href="/ayuda"><?= $weeklyStatus['all_done'] ? 'Ver ayuda' : 'Guíame paso a paso' ?></a>
         </section>
 
+        <section class="overview-section" aria-labelledby="overview-title">
+            <div class="overview-heading">
+                <div><p class="eyebrow">Tus saldos actuales</p><h2 id="overview-title">Vista general</h2></div>
+                <?php if (!$latest): ?><p>Se completará cuando guardes tu primera revisión.</p><?php endif; ?>
+            </div>
+            <div class="overview-grid">
+                <article class="overview-kpi overview-total">
+                    <span>Total registrado</span>
+                    <strong><?= $balanceOverview['total'] === null ? '—' : $money($balanceOverview['total']) ?></strong>
+                    <small>Suma de los cinco saldos</small>
+                </article>
+                <article class="overview-kpi"><span>Trade Republic</span><strong><?= $balanceOverview['trade_republic'] === null ? '—' : $money($balanceOverview['trade_republic']) ?></strong><small>Colchón de emergencia</small></article>
+                <article class="overview-kpi"><span>Fondos · largo plazo</span><strong><?= $balanceOverview['long_term'] === null ? '—' : $money($balanceOverview['long_term']) ?></strong><small>myInvestor</small></article>
+                <article class="overview-kpi"><span>Cartera piso</span><strong><?= $balanceOverview['home_portfolio'] === null ? '—' : $money($balanceOverview['home_portfolio']) ?></strong><small>myInvestor</small></article>
+                <article class="overview-kpi"><span>Bitcoin</span><strong><?= $balanceOverview['bitcoin'] === null ? '—' : $money($balanceOverview['bitcoin']) ?></strong><small>Valor actual</small></article>
+                <article class="overview-kpi"><span>BBVA</span><strong><?= $balanceOverview['bbva'] === null ? '—' : $money($balanceOverview['bbva']) ?></strong><small>Saldo actual</small></article>
+            </div>
+        </section>
+
         <?php if ($planSummary['emergency_reached']): ?>
             <section class="milestone"><strong>Colchón completado 🎉</strong><span>Abre la cartera piso en myInvestor y dirige allí los <?= $money($planSummary['plan']['emergency']) ?> mensuales. Trade Republic queda fijo en 3.000 €.</span></section>
         <?php endif; ?>
@@ -73,19 +92,6 @@ $chartHistory = array_map(static fn (array $row): array => [
                 <div class="status-row"><span>Bitcoin · <?= $money($planSummary['plan']['bitcoin']) ?></span><span class="status status-<?= e($planSummary['bitcoin_status']['tone']) ?>"><?= e($planSummary['bitcoin_status']['label']) ?></span></div>
             </article>
         </section>
-
-        <?php if ($latest): ?>
-        <section>
-            <h2>Saldos</h2>
-            <div class="balance-grid">
-                <article class="balance"><span>Trade Republic</span><strong><?= $money((float) $latest['trade_republic']) ?></strong></article>
-                <article class="balance"><span>myInvestor · largo plazo</span><strong><?= $money((float) $latest['long_term']) ?></strong></article>
-                <article class="balance"><span>myInvestor · piso</span><strong><?= $money((float) $latest['home_portfolio']) ?></strong></article>
-                <article class="balance"><span>Bitcoin</span><strong><?= $money((float) $latest['bitcoin']) ?></strong></article>
-                <article class="balance"><span>BBVA</span><strong><?= $money((float) $latest['bbva']) ?></strong></article>
-            </div>
-        </section>
-        <?php endif; ?>
 
         <?php if (count($history) >= 2): ?>
         <section class="card chart-card">

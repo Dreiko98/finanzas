@@ -28,6 +28,9 @@ $assert($summary['emergency_progress'] === 50.0, 'El progreso del colchón no es
 $assert($summary['funds_status']['tone'] === 'green' && $summary['bitcoin_status']['tone'] === 'amber', 'Los semáforos no son correctos.');
 $old = $service->summary(['recorded_on' => '2026-08-31', 'trade_republic' => 3100, 'funds_done' => 1, 'bitcoin_done' => 1], new DateTimeImmutable('2026-09-26'));
 $assert($old['emergency_reached'] === true && $old['funds_status']['tone'] === 'red', 'El cambio de mes o el hito no son correctos.');
+$overview = $service->balanceOverview(['trade_republic' => 1000, 'long_term' => 500, 'home_portfolio' => 0, 'bitcoin' => 100, 'bbva' => 400]);
+$assert($overview['total'] === 2000.0 && $overview['long_term'] === 500.0, 'La vista general no suma correctamente los saldos.');
+$assert($service->balanceOverview(null)['total'] === null, 'La vista general vacía debe distinguirse de un saldo cero.');
 
 $pdo = App\Database::connect(['driver' => 'sqlite', 'sqlite_path' => ':memory:']);
 $repository = new App\SnapshotRepository($pdo, 'sqlite');
