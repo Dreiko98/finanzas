@@ -36,28 +36,19 @@ final class PlanService
         ];
     }
 
-    public function balanceOverview(?array $latest): array
+    public function balanceOverview(?array $latest, ?array $latestReview): array
     {
-        if ($latest === null) {
-            return [
-                'total' => null,
-                'trade_republic' => null,
-                'long_term' => null,
-                'home_portfolio' => null,
-                'bitcoin' => null,
-                'bbva' => null,
-            ];
-        }
-
         $balances = [
-            'trade_republic' => (float) $latest['trade_republic'],
-            'long_term' => (float) $latest['long_term'],
-            'home_portfolio' => (float) $latest['home_portfolio'],
-            'bitcoin' => (float) $latest['bitcoin'],
-            'bbva' => (float) $latest['bbva'],
+            'trade_republic' => $latest === null ? null : (float) $latest['trade_republic'],
+            'long_term' => $latest === null ? null : (float) $latest['long_term'],
+            'home_portfolio' => $latest === null ? null : (float) $latest['home_portfolio'],
+            'bitcoin' => $latest === null ? null : (float) $latest['bitcoin'],
+            'fixed_expenses' => $latest === null ? null : (float) $latest['fixed_expenses'],
+            'current_expenses' => $latestReview === null ? null : (float) $latestReview['remaining_balance'],
         ];
 
-        return ['total' => array_sum($balances)] + $balances;
+        $complete = !in_array(null, $balances, true);
+        return ['total' => $complete ? array_sum($balances) : null] + $balances;
     }
 
     private function status(bool $done, DateTimeImmutable $today): array

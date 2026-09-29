@@ -67,12 +67,13 @@ final class Database
             long_term DECIMAL(12,2) NOT NULL,
             home_portfolio DECIMAL(12,2) NOT NULL,
             bitcoin DECIMAL(12,2) NOT NULL,
-            bbva DECIMAL(12,2) NOT NULL,
+            fixed_expenses DECIMAL(12,2) NOT NULL,
             funds_done SMALLINT NOT NULL DEFAULT 0,
             bitcoin_done SMALLINT NOT NULL DEFAULT 0,
             created_at {$dateTime} NOT NULL
             {$uniqueDate}
         )");
+        self::renameLegacyBbvaColumn($pdo, $driver);
 
         $uniqueReviewDate = $driver === 'mysql' ? ', UNIQUE KEY uq_review_date (reviewed_on)' : ', UNIQUE (reviewed_on)';
         $pdo->exec("CREATE TABLE IF NOT EXISTS current_account_reviews (
@@ -94,6 +95,21 @@ final class Database
         )");
         if ($driver === 'sqlite') {
             $pdo->exec('CREATE INDEX IF NOT EXISTS idx_income_date ON incomes (income_date)');
+        }
+    }
+
+    private static function renameLegacyBbvaColumn(PDO $pdo, string $driver): void
+    {
+        if ($driver === 'mysql') {
+            $columns = $pdo->query('SHOW COLUMNS FROM financial_snapshots')->fetchAll();
+            $names = array_column($columns, 'Field');
+        } else {
+            $columns = $pdo->query('PRAGMA table_info(financial_snapshots)')->fetchAll();
+            $names = array_column($columns, 'name');
+        }
+
+        if (in_array('bbva', $names, true) && !in_array('fixed_expenses', $names, true)) {
+            $pdo->exec('ALTER TABLE financial_snapshots RENAME COLUMN bbva TO fixed_expenses');
         }
     }
 }

@@ -5,7 +5,7 @@
     const history = JSON.parse(canvas.dataset.history || '[]');
     const series = [
         ['trade', '#38bdf8'], ['longTerm', '#a78bfa'], ['home', '#f472b6'],
-        ['bitcoin', '#f59e0b'], ['bbva', '#34d399'],
+        ['bitcoin', '#f59e0b'], ['fixed', '#34d399'],
     ];
     const context = canvas.getContext('2d');
 

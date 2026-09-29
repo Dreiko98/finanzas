@@ -15,9 +15,9 @@ final class SnapshotRepository
 
     public function save(array $data): void
     {
-        $columns = 'recorded_on, trade_republic, long_term, home_portfolio, bitcoin, bbva, funds_done, bitcoin_done, created_at';
-        $values = ':recorded_on, :trade_republic, :long_term, :home_portfolio, :bitcoin, :bbva, :funds_done, :bitcoin_done, :created_at';
-        $fields = ['trade_republic', 'long_term', 'home_portfolio', 'bitcoin', 'bbva', 'funds_done', 'bitcoin_done', 'created_at'];
+        $columns = 'recorded_on, trade_republic, long_term, home_portfolio, bitcoin, fixed_expenses, funds_done, bitcoin_done, created_at';
+        $values = ':recorded_on, :trade_republic, :long_term, :home_portfolio, :bitcoin, :fixed_expenses, :funds_done, :bitcoin_done, :created_at';
+        $fields = ['trade_republic', 'long_term', 'home_portfolio', 'bitcoin', 'fixed_expenses', 'funds_done', 'bitcoin_done', 'created_at'];
         $updates = $this->driver === 'mysql'
             ? implode(', ', array_map(static fn (string $field): string => "{$field} = VALUES({$field})", $fields))
             : implode(', ', array_map(static fn (string $field): string => "{$field} = excluded.{$field}", $fields));
@@ -30,7 +30,7 @@ final class SnapshotRepository
             'long_term' => $data['long_term'],
             'home_portfolio' => $data['home_portfolio'],
             'bitcoin' => $data['bitcoin'],
-            'bbva' => $data['bbva'],
+            'fixed_expenses' => $data['fixed_expenses'],
             'funds_done' => !empty($data['funds_done']) ? 1 : 0,
             'bitcoin_done' => !empty($data['bitcoin_done']) ? 1 : 0,
             'created_at' => (new DateTimeImmutable())->format('Y-m-d H:i:s'),

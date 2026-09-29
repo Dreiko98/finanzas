@@ -72,7 +72,7 @@ if ($path === '/plan' && $method === 'POST') {
     $date = (string) ($_POST['recorded_on'] ?? '');
     $dateObject = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
     $validDate = $dateObject !== false && $dateObject->format('Y-m-d') === $date && $date <= date('Y-m-d');
-    $fields = ['trade_republic', 'long_term', 'home_portfolio', 'bitcoin', 'bbva'];
+    $fields = ['trade_republic', 'long_term', 'home_portfolio', 'bitcoin', 'fixed_expenses'];
     $values = [];
     foreach ($fields as $field) {
         $raw = str_replace(',', '.', trim((string) ($_POST[$field] ?? '')));
@@ -177,7 +177,7 @@ $latestReview = $cashflow->latestReview();
 $weeklyStatus = (new WeeklyGuide())->status($latest, $latestReview, new DateTimeImmutable('today'));
 $planService = new PlanService();
 $planSummary = $planService->summary($latest, new DateTimeImmutable('today'));
-$balanceOverview = $planService->balanceOverview($latest);
+$balanceOverview = $planService->balanceOverview($latest, $latestReview);
 $flashSuccess = $_SESSION['flash_success'] ?? null;
 $flashError = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_success'], $_SESSION['flash_error']);

@@ -7,11 +7,11 @@ $form = $latest
         'funds_done' => substr((string) $latest['recorded_on'], 0, 7) === $currentMonth ? $latest['funds_done'] : 0,
         'bitcoin_done' => substr((string) $latest['recorded_on'], 0, 7) === $currentMonth ? $latest['bitcoin_done'] : 0,
     ])
-    : ['recorded_on' => date('Y-m-d'), 'trade_republic' => '', 'long_term' => '', 'home_portfolio' => '0', 'bitcoin' => '', 'bbva' => '', 'funds_done' => 0, 'bitcoin_done' => 0];
+    : ['recorded_on' => date('Y-m-d'), 'trade_republic' => '', 'long_term' => '', 'home_portfolio' => '0', 'bitcoin' => '', 'fixed_expenses' => '', 'funds_done' => 0, 'bitcoin_done' => 0];
 $chartHistory = array_map(static fn (array $row): array => [
     'date' => $row['recorded_on'], 'trade' => (float) $row['trade_republic'],
     'longTerm' => (float) $row['long_term'], 'home' => (float) $row['home_portfolio'],
-    'bitcoin' => (float) $row['bitcoin'], 'bbva' => (float) $row['bbva'],
+    'bitcoin' => (float) $row['bitcoin'], 'fixed' => (float) $row['fixed_expenses'],
 ], $history);
 ?>
 <!doctype html>
@@ -71,7 +71,8 @@ $chartHistory = array_map(static fn (array $row): array => [
                 <article class="overview-kpi"><span>Fondos · largo plazo</span><strong><?= $balanceOverview['long_term'] === null ? '—' : $money($balanceOverview['long_term']) ?></strong><small>myInvestor</small></article>
                 <article class="overview-kpi"><span>Cartera piso</span><strong><?= $balanceOverview['home_portfolio'] === null ? '—' : $money($balanceOverview['home_portfolio']) ?></strong><small>myInvestor</small></article>
                 <article class="overview-kpi"><span>Bitcoin</span><strong><?= $balanceOverview['bitcoin'] === null ? '—' : $money($balanceOverview['bitcoin']) ?></strong><small>Valor actual</small></article>
-                <article class="overview-kpi"><span>BBVA</span><strong><?= $balanceOverview['bbva'] === null ? '—' : $money($balanceOverview['bbva']) ?></strong><small>Saldo actual</small></article>
+                <article class="overview-kpi"><span>Gastos corrientes</span><strong><?= $balanceOverview['current_expenses'] === null ? '—' : $money($balanceOverview['current_expenses']) ?></strong><small>Saldo restante</small></article>
+                <article class="overview-kpi"><span>Gastos fijos</span><strong><?= $balanceOverview['fixed_expenses'] === null ? '—' : $money($balanceOverview['fixed_expenses']) ?></strong><small>Dinero reservado</small></article>
             </div>
         </section>
 
@@ -97,7 +98,7 @@ $chartHistory = array_map(static fn (array $row): array => [
         <section class="card chart-card">
             <div class="card-title"><div><p class="eyebrow">Histórico</p><h2>Evolución de saldos</h2></div></div>
             <div class="chart-wrap"><canvas id="balance-chart" data-history="<?= e(json_encode($chartHistory, JSON_THROW_ON_ERROR)) ?>" aria-label="Evolución de los cinco saldos"></canvas></div>
-            <div class="chart-legend" aria-hidden="true"><span class="trade">Trade Republic</span><span class="long">Largo plazo</span><span class="home">Piso</span><span class="bitcoin">Bitcoin</span><span class="bbva">BBVA</span></div>
+            <div class="chart-legend" aria-hidden="true"><span class="trade">Trade Republic</span><span class="long">Largo plazo</span><span class="home">Piso</span><span class="bitcoin">Bitcoin</span><span class="fixed">Gastos fijos</span></div>
         </section>
         <?php endif; ?>
 
@@ -111,7 +112,7 @@ $chartHistory = array_map(static fn (array $row): array => [
                     <label>myInvestor · largo plazo (€)<input type="number" name="long_term" min="0" max="99999999.99" step="0.01" inputmode="decimal" required value="<?= e($form['long_term']) ?>"></label>
                     <label>myInvestor · piso (€)<input type="number" name="home_portfolio" min="0" max="99999999.99" step="0.01" inputmode="decimal" required value="<?= e($form['home_portfolio']) ?>"></label>
                     <label>Bitcoin (€)<input type="number" name="bitcoin" min="0" max="99999999.99" step="0.01" inputmode="decimal" required value="<?= e($form['bitcoin']) ?>"></label>
-                    <label>BBVA (€)<input type="number" name="bbva" min="0" max="99999999.99" step="0.01" inputmode="decimal" required value="<?= e($form['bbva']) ?>"></label>
+                    <label>Gastos fijos reservados (€)<input type="number" name="fixed_expenses" min="0" max="99999999.99" step="0.01" inputmode="decimal" required value="<?= e($form['fixed_expenses']) ?>"></label>
                 </div>
                 <fieldset>
                     <legend>Aportaciones de este mes</legend>

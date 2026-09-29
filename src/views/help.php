@@ -45,7 +45,7 @@ $nextLabel = !$weeklyStatus['plan_done'] ? 'Empezar por los saldos' : (!$weeklyS
                 <div class="guide-number"><?= $weeklyStatus['plan_done'] ? '✓' : '1' ?></div>
                 <div class="guide-content">
                     <div class="guide-heading"><div><p class="eyebrow">Paso 1 · obligatorio</p><h2>Actualiza tus cinco saldos</h2></div><span class="guide-state"><?= $weeklyStatus['plan_done'] ? 'Hecho' : 'Pendiente' ?></span></div>
-                    <p>Abre Trade Republic, myInvestor, tu posición de bitcoin y BBVA. Copia el saldo de cada uno en la revisión semanal.</p>
+                    <p>Abre Trade Republic, myInvestor y tu posición de bitcoin. Copia sus valores y añade cuánto dinero mantienes reservado para gastos fijos.</p>
                     <ul>
                         <li>La cartera piso se queda en 0 € mientras no exista.</li>
                         <li>Marca las casillas si este mes ya aportaste <?= $money($monthlyPlan['funds']) ?> a fondos y <?= $money($monthlyPlan['bitcoin']) ?> a bitcoin.</li>
